@@ -12,15 +12,28 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    items = relationship("Item", back_populates="owner")
+    songs = relationship("Song", back_populates="listener")
 
 
-class Item(Base):
-    __tablename__ = "items"
+class Song(Base):
+    __tablename__ = "songs"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
-    description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    artist = Column(String, index=True)
+    album = Column(String, index=True)
+    release_date = Column(String, index=True)
+    listener_id = Column(Integer, ForeignKey("users.id"))
+    kpop_group_id = Column(Integer, ForeignKey("kpop_groups.id"))
 
-    owner = relationship("User", back_populates="items")
+    listener = relationship("User", back_populates="songs")
+    kpop_group = relationship("KpopGroup", back_populates="songs")
+
+
+class KpopGroup(Base):
+    __tablename__ = "kpop_groups"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+
+    songs = relationship("Song", back_populates="kpop_group")

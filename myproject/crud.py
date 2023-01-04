@@ -25,13 +25,33 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).offset(skip).limit(limit).all()
+def get_songs(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Song).offset(skip).limit(limit).all()
 
 
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = models.Item(**item.dict(), owner_id=user_id)
-    db.add(db_item)
+def create_user_song_kpopgroup(db: Session, song: schemas.SongCreate, user_id: int, kpop_group_id: int):
+    db_song = models.Song(**song.dict(), listener_id=user_id, kpop_group_id=kpop_group_id)
+    db.add(db_song)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(db_song)
+    return db_song
+
+
+def get_kpop_group(db: Session, kpop_group_id: int):
+    return db.query(models.KpopGroup).filter(models.KpopGroup.id == kpop_group_id).first()
+
+
+def get_kpop_group_by_name(db: Session, name: str):
+    return db.query(models.KpopGroup).filter(models.KpopGroup.name == name).first()
+
+
+def get_kpop_groups(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.KpopGroup).offset(skip).limit(limit).all()
+
+
+def create_kpop_group(db: Session, kpop_group: schemas.KpopGroupCreate):
+    db_kpop_group = models.KpopGroup(**kpop_group.dict())
+    db.add(db_kpop_group)
+    db.commit()
+    db.refresh(db_kpop_group)
+    return db_kpop_group

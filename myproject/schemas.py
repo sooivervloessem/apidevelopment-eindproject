@@ -1,18 +1,21 @@
 from pydantic import BaseModel
 
 
-class ItemBase(BaseModel):
+class SongBase(BaseModel):
     title: str
-    description: str | None = None
+    artist: str
+    album: str | None = None
+    release_date: str | None = None
 
 
-class ItemCreate(ItemBase):
+class SongCreate(SongBase):
     pass
 
 
-class Item(ItemBase):
+class Song(SongBase):
     id: int
-    owner_id: int
+    listener_id: int
+    kpop_group_id: int
 
     class Config:
         orm_mode = True
@@ -29,7 +32,23 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    items: list[Item] = []
+    songs: list[Song] = []
+
+    class Config:
+        orm_mode = True
+
+
+class KpopGroupBase(BaseModel):
+    name: str
+
+
+class KpopGroupCreate(KpopGroupBase):
+    pass
+
+
+class KpopGroup(KpopGroupBase):
+    id: int
+    songs: list[Song] = []
 
     class Config:
         orm_mode = True

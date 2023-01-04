@@ -19,7 +19,7 @@ print("Tables created.......")
 app = FastAPI()
 
 
-# Dependency
+# Create Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -50,14 +50,14 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
+@app.post("/users/{user_id}/{kpop_group_id}/songs/", response_model=schemas.Song)
+def create_song_for_user(
+    user_id: int, kpop_group_id: int, song: schemas.SongCreate, db: Session = Depends(get_db)
 ):
-    return crud.create_user_item(db=db, item=item, user_id=user_id)
+    return crud.create_user_song_kpopgroup(db=db, song=song, user_id=user_id, kpop_group_id=kpop_group_id)
 
 
-@app.get("/items/", response_model=list[schemas.Item])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_items(db, skip=skip, limit=limit)
-    return items
+@app.get("/songs/", response_model=list[schemas.Song])
+def read_songs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    songs = crud.get_songs(db, skip=skip, limit=limit)
+    return songs
