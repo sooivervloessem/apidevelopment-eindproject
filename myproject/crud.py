@@ -25,12 +25,21 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
+# Link listener to song
+def create_user_song(db: Session, listener_song: schemas.ListenerSongCreate, listener_id: int, song_id: int):
+    db_user_song = models.ListenerSong(**listener_song.dict(), listener_id=listener_id, song_id=song_id)
+    db.add(db_user_song)
+    db.commit()
+    db.refresh(db_user_song)
+    return db_user_song
+
+
 def get_songs(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Song).offset(skip).limit(limit).all()
 
 
-def create_user_song_kpopgroup(db: Session, song: schemas.SongCreate, user_id: int, kpop_group_id: int):
-    db_song = models.Song(**song.dict(), listener_id=user_id, kpop_group_id=kpop_group_id)
+def create_song_kpopgroup(db: Session, song: schemas.SongCreate, kpop_group_id: int):
+    db_song = models.Song(**song.dict(), kpop_group_id=kpop_group_id)
     db.add(db_song)
     db.commit()
     db.refresh(db_song)

@@ -50,11 +50,33 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/{kpop_group_id}/songs/", response_model=schemas.Song)
-def create_song_for_user(
-    user_id: int, kpop_group_id: int, song: schemas.SongCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_song_kpopgroup(db=db, song=song, user_id=user_id, kpop_group_id=kpop_group_id)
+@app.post("/listener/{listener_id}/{song_id}", response_model=schemas.ListenerSong)
+def link_listener_song(listener_song: schemas.ListenerSongCreate, listener_id: int, song_id: int, db: Session = Depends(get_db)):
+    return crud.create_user_song(db, listener_song=listener_song, listener_id=listener_id, song_id=song_id)
+
+
+@app.post("/kpop_groups/", response_model=schemas.KpopGroup)
+def create_kpop_group(kpop_group: schemas.KpopGroupCreate, db: Session = Depends(get_db)):
+    return crud.create_kpop_group(db=db, kpop_group=kpop_group)
+
+
+@app.get("/kpop_groups/", response_model=list[schemas.KpopGroup])
+def read_kpop_groups(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    kpop_groups = crud.get_kpop_groups(db, skip=skip, limit=limit)
+    return kpop_groups
+
+
+@app.get("/kpop_groups/{kpop_group_id}", response_model=schemas.KpopGroup)
+def read_kpop_group(kpop_group_id: int, db: Session = Depends(get_db)):
+    db_kpop_group = crud.get_kpop_group(db, kpop_group_id=kpop_group_id)
+    if db_kpop_group is None:
+        raise HTTPException(status_code=404, detail="Kpop group not found")
+    return db_kpop_group
+
+
+@app.post("/kpop_group/{kpop_group_id}/songs/", response_model=schemas.Song)
+def create_song_for_kpop_group(kpop_group_id: int, song: schemas.SongCreate, db: Session = Depends(get_db)):
+    return crud.create_song_kpopgroup(db=db, song=song, kpop_group_id=kpop_group_id)
 
 
 @app.get("/songs/", response_model=list[schemas.Song])
