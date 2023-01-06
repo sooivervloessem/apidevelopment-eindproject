@@ -38,6 +38,10 @@ def get_songs(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Song).offset(skip).limit(limit).all()
 
 
+def get_songs_by_id(db: Session, song_id: int):
+    return db.query(models.Song).filter(models.Song.id == song_id).first()
+
+
 def create_song_kpopgroup(db: Session, song: schemas.SongCreate, kpop_group_id: int):
     db_song = models.Song(**song.dict(), kpop_group_id=kpop_group_id)
     db.add(db_song)
@@ -64,3 +68,21 @@ def create_kpop_group(db: Session, kpop_group: schemas.KpopGroupCreate):
     db.commit()
     db.refresh(db_kpop_group)
     return db_kpop_group
+
+
+def update_song_kpopgroup(db: Session, song: schemas.SongCreate, song_id: int):
+    db_song = db.get(models.Song, song_id)
+    song_data = song.dict(exclude_unset=True)
+    for key, value in song_data.items():
+        setattr(db_song, key, value)
+    db.add(db_song)
+    db.commit()
+    db.refresh(db_song)
+    return db_song
+
+
+def delete_song_kpopgroup(db: Session, song_id: int):
+    db_song = db.get(models.Song, song_id)
+    db.delete(db_song)
+    db.commit()
+    return {"Song deleted": True}

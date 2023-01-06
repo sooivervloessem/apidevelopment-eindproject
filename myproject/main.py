@@ -83,3 +83,21 @@ def create_song_for_kpop_group(kpop_group_id: int, song: schemas.SongCreate, db:
 def read_songs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     songs = crud.get_songs(db, skip=skip, limit=limit)
     return songs
+
+
+@app.get("/songs/{song_id}", response_model=schemas.Song)
+def read_song(song_id: int, db: Session = Depends(get_db)):
+    db_song = crud.get_songs_by_id(db, song_id=song_id)
+    if db_song is None:
+        raise HTTPException(status_code=404, detail="Song not found")
+    return db_song
+
+
+@app.put("/songs/{song_id}", response_model=schemas.Song)
+def update_song(song_id: int, song: schemas.SongCreate, db: Session = Depends(get_db)):
+    return crud.update_song_kpopgroup(db=db, song=song, song_id=song_id)
+
+
+@app.delete("/songs/{song_id}")
+def delete_song(song_id: int, db: Session = Depends(get_db)):
+    return crud.delete_song_kpopgroup(db=db, song_id=song_id)
