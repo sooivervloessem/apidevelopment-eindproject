@@ -354,6 +354,104 @@
             <button type="submit" class=" mt-2 btn btn-primary" x-on:click="create_kpop_song()">Submit</button>
         </div>
     </div>
+
+
+    <div class="col-6" id="post_user" x-data="{
+            responsedata: null,
+            email: null,
+            password: null,
+            async create_user() {
+                                                                
+                if(this.email != null && this.email != '' && this.password != null && this.password != ''){
+            
+                    this.responsedata = await (await fetch('http://localhost:8000/users/', 
+                    {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email: this.email,
+                        password: this.password,
+                   }),
+                   headers: {
+                       'Content-type': 'application/json; charset=UTF-8',
+                   },
+                   })).json();
+                  
+                   console.log(this.responsedata);
+                   
+                   alert('User successfully created and added to the database');
+                   this.email = null;
+                   this.password = null;
+                }
+                else {
+                    alert('Fill in at least an email and a password!');
+                }
+            }
+        }">
+
+        <div class="mb-3 mx-3">
+
+            <h2>Add a user to the database</h2>
+
+            <div class="card no-max-width">
+                <div class="card-header">
+                    <input placeholder="Email" x-model="email" class="form-control" id="emailInput">
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <input placeholder="Password" x-model="password" class="form-control" id="passwordInput">
+                    </li>
+                </ul>
+            </div>
+            <button type="submit" class=" mt-2 btn btn-primary" x-on:click="create_user()">Submit</button>
+        </div>
+    </div>
+
+
+    <div class="col-6" id="post_kpop_group" x-data="{
+            responsedata: null,
+            name: null,
+            async create_kpop_group() {
+                                                                
+                if(this.name != null && this.name != ''){
+            
+                    this.responsedata = await (await fetch('http://localhost:8000/kpop_groups/', 
+                    {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        name: this.name,
+                   }),
+                   headers: {
+                       'Content-type': 'application/json; charset=UTF-8',
+                   },
+                   })).json();
+                  
+                   console.log(this.responsedata);
+                   
+                   alert('Kpop group successfully added to the database');
+                   this.name = null;
+                }
+                else {
+                    alert('Fill in at least a name!');
+                }
+            }
+        }">
+
+        <div class="mb-3 mx-3">
+
+            <h2>Add a kpop group to the database</h2>
+
+            <div class="card no-max-width">
+                <div class="card-header">
+                    <input placeholder="Name" x-model="name" class="form-control" id="nameInput">
+                </div>
+            </div>
+            <button type="submit" class=" mt-2 btn btn-primary" x-on:click="create_kpop_group()">Submit</button>
+        </div>
+    </div>
+
+
+
+
     </div>
 
 </body>
