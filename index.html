@@ -125,7 +125,7 @@
         </div>
 
 
-        <div class="col-12" id="user_by_id" x-data="{
+        <div class="col-6" id="user_by_id" x-data="{
             responsedata: null,
             id: null,
             requestUserId: null,
@@ -153,14 +153,14 @@
                 }
             }
         }">
-            <div>
+            <div class="mt-4">
                 <h2>Search user by id</h2>
 
                 <div class="mb-3 mx-3">
                     <input x-model="requestUserId" class="form-control" id="idInput" name="id">
                 </div>
 
-                <div class="card">
+                <div class="card no-max-width">
                     <div class="card-header">
                         Email:
                         <div class=" bold" x-text="responsedata.email">Placeholder</div>
@@ -181,8 +181,67 @@
         </div>
 
 
+        <div class="col-6" id="kpop_group_by_id" x-data="{
+            responsedata: null,
+            id: null,
+            requestKpopId: null,
+            async get_kpop_group_by_id() {
+                
+                url = 'http://localhost:8000/kpop_groups/';
+                id = this.requestKpopId;
+                finalUrl = url + id;
+                
+                if(sessionStorage.token)
+                {
+                    this.responsedata = await (await fetch(finalUrl,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.token,
+                            'accept': 'application/json',
+                        },
+                    })).json();
+                    
+                    console.log(this.responsedata);
+                }
+                else{
+                    alert('You are not authorized!');
+                }
+            }
+        }">
+            <div class="mt-4">
+                <h2>Search Kpop group by id</h2>
 
-        <div class="col-12" id="post_song" x-data="{
+                <div class="mb-3 mx-3">
+                    <input x-model="requestKpopId" class="form-control" id="idInput" name="id">
+                </div>
+
+                <div class="card no-max-width">
+                    <div class="card-header">
+                        Name:
+                        <div class=" bold" x-text="responsedata.name">Placeholder</div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Songs: <div class=" bold">
+                                <template x-for="song in responsedata.songs">
+                        <li class="list-group-item" x-text="song.title"></li>
+                        </template>
+                </div>
+                </li>
+
+                </ul>
+            </div>
+
+            <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_kpop_group_by_id()">Submit</button>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-12" id="post_song" x-data="{
             responsedata: null,
             songName: null,
             artistName: null,
@@ -218,30 +277,30 @@
             }
         }">
 
-            <div class="mb-3 mx-3">
+        <div class="mb-3 mx-3">
 
-                <h2>Add a Kpop Song to the database</h2>
-                <h5>Fill in at least a song and an artist</h5>
+            <h2>Add a Kpop Song to the database</h2>
+            <h5>Fill in at least a song and an artist</h5>
 
-                <div class="card no-max-width">
-                    <div class="card-header">
-                        <input placeholder="Song" x-model="songName" class="form-control" id="songInput">
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <input placeholder="Artist" x-model="artistName" class="form-control" id="artistInput">
-                        </li>
-                        <li class="list-group-item">
-                            <input placeholder="Album" x-model="albumName" class="form-control" id="albumInput">
-                        </li>
-                        <li class="list-group-item">
-                            <input placeholder="Release Date" x-model="releaseDate" class="form-control" id="releaseDateInput">
-                        </li>
-                    </ul>
+            <div class="card no-max-width">
+                <div class="card-header">
+                    <input placeholder="Song" x-model="songName" class="form-control" id="songInput">
                 </div>
-                <button type="submit" class=" mt-2 btn btn-primary" x-on:click="create_kpop_song()">Submit</button>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <input placeholder="Artist" x-model="artistName" class="form-control" id="artistInput">
+                    </li>
+                    <li class="list-group-item">
+                        <input placeholder="Album" x-model="albumName" class="form-control" id="albumInput">
+                    </li>
+                    <li class="list-group-item">
+                        <input placeholder="Release Date" x-model="releaseDate" class="form-control" id="releaseDateInput">
+                    </li>
+                </ul>
             </div>
+            <button type="submit" class=" mt-2 btn btn-primary" x-on:click="create_kpop_song()">Submit</button>
         </div>
+    </div>
     </div>
 
 </body>
