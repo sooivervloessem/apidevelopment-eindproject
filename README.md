@@ -39,18 +39,18 @@ Wanneer we niet ingelogd zijn krijgen we:
 ![Image search user by id fail](/images_readme/frontend_search_user_by_id_fail.png)  
 
 ### Search Kpop group by id
-Kpop groupen kunnen per id gezocht worden. Bij songs wordt enkel de titel weergegeven in een lijst element. In dit geval 'Circus' en 'Super Board'.
+Kpop groupen kunnen per id gezocht worden. Bij songs wordt enkel de titel weergegeven in een lijst element. In dit geval 'Circus' en 'Super Board'.  
 ![Image search kpop by id](/images_readme/frontend_search_kpop_group_by_id.png)  
 
 ### Search song by id
-We kunnen ook nummers zoeken per id:
+We kunnen ook nummers zoeken per id:  
 ![Image search song by id](/images_readme/frontend_search_song_by_id.png)  
 
 ### Add a Kpop song to the database
-Nu is het tijd om de POSTS te tonen. De eerste is om een song aan te maken voor een bepaalde kpop group. Het is de bedoeling dat het id nummer van de Kpop group wordt meegegeven, zodat de relatie kan gemaakt worden in de database.
+Nu is het tijd om de POSTS te tonen. De eerste is om een song aan te maken voor een bepaalde kpop group. Het is de bedoeling dat het id nummer van de Kpop group wordt meegegeven, zodat de relatie kan gemaakt worden in de database.  
 ![Image add a kpop song](/images_readme/frontend_add_a_kpop_song.png)  
 
-De song is nu ook toegevoegd:
+De song is nu ook toegevoegd:  
 ![Image song is added](/images_readme/frontend_song_has_been_added.png)  
 
 ### Add a user to the database
@@ -59,14 +59,14 @@ Gebruikers kunnen aangemaakt worden met een email en een wachtwoord.
 
 We kunnen nu ook inloggen met deze gebruiker:
 ![Image login as new user](/images_readme/frontend_we_can_login_with_user.png)  
-We checken de nieuwe gebruiker:
+We checken de nieuwe gebruiker:  
 ![Image check new user](/images_readme/frontend_check_new_user.png)  
 
 ### Add a kpop group to the database
 Als laatste voegen we een kpop group toe aan de database:
 ![Image add kpop group](/images_readme/frontend_add_a_kpop_group.png)  
 
-Deze Kpop group kan nu opgevraagd worden. Het veld 'Songs' is nog leeg, aangezien er nog geen songs zijn toegevoegd:
+Deze Kpop group kan nu opgevraagd worden. Het veld 'Songs' is nog leeg, aangezien er nog geen songs zijn toegevoegd:  
 ![Image check kpop group](/images_readme/frontend_check_kpop_group.png)  
 
 We voegen een song toe ter illustratie:
