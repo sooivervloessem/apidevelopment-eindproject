@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 
 import auth
 import os
@@ -19,6 +20,20 @@ models.Base.metadata.create_all(bind=engine)
 print("Tables created.......")
 
 app = FastAPI()
+
+origins = [
+    "https://sooivervloessem.github.io",
+    "https://sooivervloessem.github.io/apidevelopment-project",
+    "http://localhost:8000/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Create Dependency
@@ -123,10 +138,10 @@ def read_song(song_id: int, db: Session = Depends(get_db)):
 
 
 @app.put("/songs/{song_id}", response_model=schemas.Song)
-def update_song(song_id: int, song: schemas.SongCreate, db: Session = Depends(get_db)):
+def update_song(song_id: int, song: schemas.SongCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     return crud.update_song_kpopgroup(db=db, song=song, song_id=song_id)
 
 
 @app.delete("/songs/{song_id}")
-def delete_song(song_id: int, db: Session = Depends(get_db)):
+def delete_song(song_id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     return crud.delete_song_kpopgroup(db=db, song_id=song_id)

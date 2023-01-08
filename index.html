@@ -1,0 +1,249 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://unpkg.com/alpinejs@3.5.0/dist/cdn.min.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <h1 class="col-12">Kpop Song API</h1>
+        <hr>
+
+        <div class="col-6" id="token" x-data="{
+            responsedata: null,
+            client_id: '',
+            client_secret: '',
+            scope: '',
+            grant_type: '',
+            refresh_token: '',
+            username: null,
+            password: null,
+            status: null,
+            
+            async get_token() {
+            
+                responsedata = await (await fetch('http://localhost:8000/token',
+                {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        client_id: this.client_id,
+                        client_secret: this.client_secret,
+                        scope: this.scope,
+                        grant_type: this.grant_type,
+                        refresh_token: this.refresh_token,
+                        username: this.username,
+                        password: this.password,
+                   }),
+                   headers: {
+                    'accept': 'application/json',
+                    'Content-type': 'application/x-www-form-urlencoded',
+                   },
+                   })).json();
+                   
+                if(responsedata.hasOwnProperty('access_token'))
+                { 
+                    alert('You are now authorized');
+                    sessionStorage.setItem('token', responsedata.access_token);
+                    location.reload();
+                } 
+            },
+            
+            async get_login_status(){
+                if(sessionStorage.token){
+                    status = 'Logged in';
+                    sessionStorage.setItem('status', 'Logged In');
+                }
+            
+            }
+        }">
+
+            <div>
+
+                <h2>Get a token</h2>
+
+                <button type="submit" class=" btn btn-primary" x-on:click="get_token()">Login</button>
+
+                <div class="card no-max-width">
+                    <div class="card-header">
+                        <input placeholder="Username" x-model="username" class="form-control" id="usernameInput">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <input placeholder="Password" x-model="password" class="form-control" id="passwordInput">
+                        </li>
+                    </ul>
+                </div>
+                <h5 x-init="get_login_status()" x-text="sessionStorage.status"></h5>
+            </div>
+        </div>
+
+
+        <div class="col-6" id="user_me" x-data="{
+            responsedata: null,
+            async get_user_me() {
+                
+                if(sessionStorage.token)
+                {
+                    this.responsedata = await (await fetch('http://localhost:8000/users/me',
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.token,
+                            'accept': 'application/json',
+                        },
+                    })).json();
+                }
+                else{
+                    alert('You are not authorized!');
+                }
+            }
+        }">
+            <div>
+                <h2>Check user login</h2>
+
+                <button type="button" class="btn btn-primary" x-on:click="get_user_me()">Check login</button>
+
+                <div class="card">
+                    <div class="card-header">
+                        Email:
+                        <div class=" bold" x-text="responsedata.email">Placeholder</div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Is_active: <div class=" bold" x-text="responsedata.is_active">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Songs: <div class=" bold" x-text="responsedata.songs">Placeholder</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12" id="user_by_id" x-data="{
+            responsedata: null,
+            id: null,
+            requestUserId: null,
+            async get_user_by_id() {
+                
+                url = 'http://localhost:8000/users/';
+                id = this.requestUserId;
+                finalUrl = url + id;
+                
+                if(sessionStorage.token)
+                {
+                    this.responsedata = await (await fetch(finalUrl,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.token,
+                            'accept': 'application/json',
+                        },
+                    })).json();
+                    
+                    console.log(this.responsedata);
+                }
+                else{
+                    alert('You are not authorized!');
+                }
+            }
+        }">
+            <div>
+                <h2>Search user by id</h2>
+
+                <div class="mb-3 mx-3">
+                    <input x-model="requestUserId" class="form-control" id="idInput" name="id">
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        Email:
+                        <div class=" bold" x-text="responsedata.email">Placeholder</div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Is_active: <div class=" bold" x-text="responsedata.is_active">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Songs: <div class=" bold" x-text="responsedata.songs">Placeholder</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_user_by_id()">Submit</button>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-12" id="post_song" x-data="{
+            responsedata: null,
+            songName: null,
+            artistName: null,
+            albumName: null,
+            releaseDate: null,
+            async create_kpop_song() {
+                                                                
+                // Check if the required fields 'songName' and 'artistName' are not empty
+                if(this.songName != null && this.songName != '' && this.artistName != null && this.artistName != ''){
+                                                                  
+                                                
+                    this.responsedata = await (await fetch('https://project-service-sooivervloessem.cloud.okteto.net/kpop', 
+                    {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        song: this.songName,
+                        artist: this.artistName,
+                        album: this.albumName,
+                        release_date: this.releaseDate,
+                   }),
+                   headers: {
+                       'Content-type': 'application/json; charset=UTF-8',
+                   },
+                   })).json();
+                
+                   console.log(this.responsedata);
+                   
+                   alert('Song successfully added to database');
+                }
+                else {
+                    alert('Fill in at least a song and an artist!');
+                }
+            }
+        }">
+
+            <div class="mb-3 mx-3">
+
+                <h2>Add a Kpop Song to the database</h2>
+                <h5>Fill in at least a song and an artist</h5>
+
+                <div class="card no-max-width">
+                    <div class="card-header">
+                        <input placeholder="Song" x-model="songName" class="form-control" id="songInput">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <input placeholder="Artist" x-model="artistName" class="form-control" id="artistInput">
+                        </li>
+                        <li class="list-group-item">
+                            <input placeholder="Album" x-model="albumName" class="form-control" id="albumInput">
+                        </li>
+                        <li class="list-group-item">
+                            <input placeholder="Release Date" x-model="releaseDate" class="form-control" id="releaseDateInput">
+                        </li>
+                    </ul>
+                </div>
+                <button type="submit" class=" mt-2 btn btn-primary" x-on:click="create_kpop_song()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

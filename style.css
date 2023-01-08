@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&family=Rock+Salt&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Fira Sans', sans-serif;
+    text-align: center;
+    justify-content: center;
+    padding-top: 5px;
+    background-color: #DEE2FF;
+}
+
+h1 {
+    font-weight: bold;
+    width: 100%;
+    height: auto;
+}
+
+.btn-primary {
+    background-color: #8E9AAF;
+    outline-color: #8E9AAF;
+    border-color: #8E9AAF;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:link,
+.btn-primary:visited {
+    background-color: #EFD3D7;
+    border-color: #CBC0D3;
+    color: black;
+}
+
+div#token,
+div#user_me,
+div#user_by_id,
+div#post_song {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    border-color: #DEE2FF;
+    box-shadow: 0px 0px 5px black;
+}
+
+.card-header {
+    background-color: #a1afc8;
+}
+
+.list-group-item {
+    background-color: #a1afc8;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.inline {
+    display: inline;
+}
+
+.form-control,
+.form-control:focus {
+    background-color: #a1afc9;
+    border-color: DEE2FF;
+    text-align: center;
+    color: white;
+}
+
+.no-max-width {
+    max-width: none;
+}
