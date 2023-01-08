@@ -48,7 +48,7 @@ We kunnen ook nummers zoeken per id:
 
 ### Add a Kpop song to the database
 Nu is het tijd om de POSTS te tonen. De eerste is om een song aan te maken voor een bepaalde kpop group. Het is de bedoeling dat het id nummer van de Kpop group wordt meegegeven, zodat de relatie kan gemaakt worden in de database.
-![Image add a kpop song](/images_readme/frontend_add_a_kpop_song.png) 
+![Image add a kpop song](/images_readme/frontend_add_a_kpop_song.png)  
 
 De song is nu ook toegevoegd:
 ![Image song is added](/images_readme/frontend_song_has_been_added.png)  
@@ -58,7 +58,7 @@ Gebruikers kunnen aangemaakt worden met een email en een wachtwoord.
 ![Image add a user](/images_readme/frontend_add_a_user.png)  
 
 We kunnen nu ook inloggen met deze gebruiker:
-![Image login as new user](/images_readme/frontend_we_can_login_with_user.png) 
+![Image login as new user](/images_readme/frontend_we_can_login_with_user.png)  
 We checken de nieuwe gebruiker:
 ![Image check new user](/images_readme/frontend_check_new_user.png)  
 
