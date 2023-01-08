@@ -24,12 +24,13 @@ app = FastAPI()
 origins = [
     "https://sooivervloessem.github.io",
     "https://sooivervloessem.github.io/apidevelopment-project",
-    "http://localhost:8000/"
+    "http://localhost:8000/",
+    "https://sooivervloessem-kpop-api.netlify.app"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
