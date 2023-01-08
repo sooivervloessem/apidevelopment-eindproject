@@ -117,15 +117,13 @@
                         </li>
                         <li class="list-group-item">Is_active: <div class=" bold" x-text="responsedata.is_active">Placeholder</div>
                         </li>
+                    </ul>
                 </div>
-                </li>
-                </ul>
             </div>
         </div>
-    </div>
 
 
-    <div class="col-6" id="user_by_id" x-data="{
+        <div class="col-6" id="user_by_id" x-data="{
             responsedata: null,
             id: null,
             requestUserId: null,
@@ -153,35 +151,33 @@
                 }
             }
         }">
-        <div class="mt-4">
-            <h2>Search user by id</h2>
+            <div class="mt-4">
+                <h2>Search user by id</h2>
 
-            <div class="mb-3 mx-3">
-                <input x-model="requestUserId" class="form-control" id="idInput" name="id">
-            </div>
-
-            <div class="card no-max-width">
-                <div class="card-header">
-                    Email:
-                    <div class=" bold" x-text="responsedata.email">Placeholder</div>
+                <div class="mb-3 mx-3">
+                    <input x-model="requestUserId" class="form-control" id="idInput" name="id">
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
-                    </li>
-                    <li class="list-group-item">Is_active: <div class=" bold" x-text="responsedata.is_active">Placeholder</div>
-                    </li>
+
+                <div class="card no-max-width">
+                    <div class="card-header">
+                        Email:
+                        <div class=" bold" x-text="responsedata.email">Placeholder</div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Is_active: <div class=" bold" x-text="responsedata.is_active">Placeholder</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_user_by_id()">Submit</button>
+
             </div>
-            </li>
-            </ul>
         </div>
 
-        <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_user_by_id()">Submit</button>
 
-    </div>
-    </div>
-
-
-    <div class="col-6" id="kpop_group_by_id" x-data="{
+        <div class="col-6" id="kpop_group_by_id" x-data="{
             responsedata: null,
             id: null,
             requestKpopId: null,
@@ -207,34 +203,34 @@
                 }
             }
         }">
-        <div class="mt-4">
-            <h2>Search Kpop group by id</h2>
+            <div class="mt-4">
+                <h2>Search Kpop group by id</h2>
 
-            <div class="mb-3 mx-3">
-                <input x-model="requestKpopId" class="form-control" id="idInput" name="id">
-            </div>
-
-            <div class="card no-max-width">
-                <div class="card-header">
-                    Name:
-                    <div class=" bold" x-text="responsedata.name">Placeholder</div>
+                <div class="mb-3 mx-3">
+                    <input x-model="requestKpopId" class="form-control" id="idInput" name="id">
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
-                    </li>
-                    <li class="list-group-item">Songs: <div class=" bold">
-                            <template x-for="song in responsedata.songs">
-                    <li class="list-group-item" x-text="song.title"></li>
-                    </template>
+
+                <div class="card no-max-width">
+                    <div class="card-header">
+                        Name:
+                        <div class=" bold" x-text="responsedata.name">Placeholder</div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Id: <div class=" bold" x-text="responsedata.id">Placeholder</div>
+                        </li>
+                        <li class="list-group-item">Songs: <div class=" bold">
+                                <template x-for="song in responsedata.songs">
+                        <li class="list-group-item" x-text="song.title"></li>
+                        </template>
+                </div>
+                </li>
+
+                </ul>
             </div>
-            </li>
 
-            </ul>
+            <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_kpop_group_by_id()">Submit</button>
+
         </div>
-
-        <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_kpop_group_by_id()">Submit</button>
-
-    </div>
     </div>
 
 
