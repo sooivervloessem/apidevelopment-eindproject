@@ -201,8 +201,6 @@
                             'accept': 'application/json',
                         },
                     })).json();
-                    
-                    console.log(this.responsedata);
                 }
                 else{
                     alert('You are not authorized!');
@@ -240,24 +238,71 @@
     </div>
 
 
-
-    <div class="col-12" id="post_song" x-data="{
+    <div class="col-6" id="song_by_id" x-data="{
             responsedata: null,
+            id: null,
+            requestSongId: null,
+            async get_song_by_id() {
+                
+                url = 'http://localhost:8000/songs/';
+                id = this.requestSongId;
+                finalUrl = url + id;
+                
+                this.responsedata = await (await fetch(finalUrl)).json();
+                    
+                console.log(this.responsedata);
+            }
+        }">
+        <div class="mt-4">
+            <h2>Search song by id</h2>
+
+            <div class="mb-3 mx-3">
+                <input x-model="requestSongId" class="form-control" id="idInput" name="id">
+            </div>
+
+            <div class="card no-max-width">
+                <div class="card-header">
+                    Title:
+                    <div class=" bold" x-text="responsedata.title">Placeholder</div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Artist: <div class=" bold" x-text="responsedata.artist">Placeholder</div>
+                    </li>
+                    <li class="list-group-item">Album: <div class=" bold" x-text="responsedata.album">Placeholder</div>
+                    </li>
+                    <li class="list-group-item">Release date: <div class=" bold" x-text="responsedata.release_date">Placeholder</div>
+                    </li>
+                </ul>
+            </div>
+
+            <button type="submit" class=" mt-2 btn btn-primary" x-on:click="get_song_by_id()">Submit</button>
+
+        </div>
+    </div>
+
+
+    <div class="col-6" id="post_song" x-data="{
+            responsedata: null,
+            kpopGroupId: null,
+            id: null,
             songName: null,
             artistName: null,
             albumName: null,
             releaseDate: null,
             async create_kpop_song() {
                                                                 
-                // Check if the required fields 'songName' and 'artistName' are not empty
-                if(this.songName != null && this.songName != '' && this.artistName != null && this.artistName != ''){
-                                                                  
-                                                
-                    this.responsedata = await (await fetch('https://project-service-sooivervloessem.cloud.okteto.net/kpop', 
+                if(this.songName != null && this.songName != '' && this.artistName != null && this.artistName != '' &&
+                this.kpopGroupId != null && this.kpopGroupId != ''){
+                   
+                    url = 'http://localhost:8000/kpop_groups/';
+                    id = this.kpopGroupId;
+                    finalUrl = url + id + '/songs/';
+                   
+                    this.responsedata = await (await fetch(finalUrl, 
                     {
                     method: 'POST',
                     body: JSON.stringify({
-                        song: this.songName,
+                        title: this.songName,
                         artist: this.artistName,
                         album: this.albumName,
                         release_date: this.releaseDate,
@@ -266,13 +311,18 @@
                        'Content-type': 'application/json; charset=UTF-8',
                    },
                    })).json();
-                
+                  
                    console.log(this.responsedata);
                    
                    alert('Song successfully added to database');
+                   this.kpopGroupId = null;
+                   this.songName = null;
+                   this.artistName = null;
+                   this.albumName = null;
+                   this.releaseDate = null;
                 }
                 else {
-                    alert('Fill in at least a song and an artist!');
+                    alert('Fill in at least an id, song and an artist!');
                 }
             }
         }">
@@ -280,13 +330,16 @@
         <div class="mb-3 mx-3">
 
             <h2>Add a Kpop Song to the database</h2>
-            <h5>Fill in at least a song and an artist</h5>
+            <h5>Fill in at least an id, song and an artist</h5>
 
             <div class="card no-max-width">
                 <div class="card-header">
-                    <input placeholder="Song" x-model="songName" class="form-control" id="songInput">
+                    <input placeholder="Kpop group id" x-model="kpopGroupId" class="form-control" id="kpopGroupIdInput">
                 </div>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <input placeholder="Song" x-model="songName" class="form-control" id="songInput">
+                    </li>
                     <li class="list-group-item">
                         <input placeholder="Artist" x-model="artistName" class="form-control" id="artistInput">
                     </li>

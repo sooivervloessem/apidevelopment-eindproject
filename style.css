@@ -41,6 +41,7 @@ div#token,
 div#user_me,
 div#user_by_id,
 div#kpop_group_by_id,
+div#song_by_id,
 div#post_song {
     display: flex;
     justify-content: center;
