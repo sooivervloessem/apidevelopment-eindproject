@@ -26,7 +26,7 @@
             
             async get_token() {
             
-                responsedata = await (await fetch('http://localhost:8000/token',
+                responsedata = await (await fetch('https://system-service-sooivervloessem.cloud.okteto.net/token',
                 {
                     method: 'POST',
                     body: new URLSearchParams({
@@ -88,7 +88,7 @@
                 
                 if(sessionStorage.token)
                 {
-                    this.responsedata = await (await fetch('http://localhost:8000/users/me',
+                    this.responsedata = await (await fetch('https://system-service-sooivervloessem.cloud.okteto.net/users/me',
                     {
                         method: 'GET',
                         headers: {
@@ -131,7 +131,7 @@
             requestUserId: null,
             async get_user_by_id() {
                 
-                url = 'http://localhost:8000/users/';
+                url = 'https://system-service-sooivervloessem.cloud.okteto.net/users/';
                 id = this.requestUserId;
                 finalUrl = url + id;
                 
@@ -187,7 +187,7 @@
             requestKpopId: null,
             async get_kpop_group_by_id() {
                 
-                url = 'http://localhost:8000/kpop_groups/';
+                url = 'https://system-service-sooivervloessem.cloud.okteto.net/kpop_groups/';
                 id = this.requestKpopId;
                 finalUrl = url + id;
                 
@@ -244,7 +244,7 @@
             requestSongId: null,
             async get_song_by_id() {
                 
-                url = 'http://localhost:8000/songs/';
+                url = 'https://system-service-sooivervloessem.cloud.okteto.net/songs/';
                 id = this.requestSongId;
                 finalUrl = url + id;
                 
@@ -294,7 +294,7 @@
                 if(this.songName != null && this.songName != '' && this.artistName != null && this.artistName != '' &&
                 this.kpopGroupId != null && this.kpopGroupId != ''){
                    
-                    url = 'http://localhost:8000/kpop_groups/';
+                    url = 'https://system-service-sooivervloessem.cloud.okteto.net/kpop_groups/';
                     id = this.kpopGroupId;
                     finalUrl = url + id + '/songs/';
                    
@@ -364,7 +364,7 @@
                                                                 
                 if(this.email != null && this.email != '' && this.password != null && this.password != ''){
             
-                    this.responsedata = await (await fetch('http://localhost:8000/users/', 
+                    this.responsedata = await (await fetch('https://system-service-sooivervloessem.cloud.okteto.net/users/', 
                     {
                     method: 'POST',
                     body: JSON.stringify({
@@ -414,7 +414,7 @@
                                                                 
                 if(this.name != null && this.name != ''){
             
-                    this.responsedata = await (await fetch('http://localhost:8000/kpop_groups/', 
+                    this.responsedata = await (await fetch('https://system-service-sooivervloessem.cloud.okteto.net/kpop_groups/', 
                     {
                     method: 'POST',
                     body: JSON.stringify({
